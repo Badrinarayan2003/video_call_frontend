@@ -12,3 +12,12 @@
     display: flex;
     flex-direction: column;
 }
+.room-btn-box{
+    display: flex;
+    justify-content: space-between;
+}
+.room-btn-box button{
+    font-size: 1rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
