@@ -1,4 +1,4 @@
-class PeerService {
+class Peer {
     constructor() {
         if (!this.peer) {
             this.peer = new RTCPeerConnection({
@@ -38,4 +38,6 @@ class PeerService {
     }
 }
 
-export default new PeerService();
+const peer = new Peer();
+
+export default peer;
