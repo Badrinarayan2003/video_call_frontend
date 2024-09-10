@@ -135,7 +135,7 @@ const Room = () => {
                 myStream &&
                 <div>
                     <h4 className="room-heading">my stream</h4>
-                    <ReactPlayer url={myStream} playing muted={isMute} width="100px" height="100px" />
+                    <ReactPlayer url={myStream} playing muted width="100px" height="100px" />
                     <div> <button onClick={() => setIsMute(!isMute)}>{isMute ? "Unmute" : "Mute"}</button> </div>
                 </div>
             }
