@@ -11,6 +11,7 @@ const Room = () => {
     const [remoteStream, setRemoteStream] = useState()
 
     const [isMute, setIsMute] = useState(false);
+    const [disConnMsg, setDisConnMsg] = useState();
 
     const handleUserJoined = useCallback(({ email, id }) => {
         console.log(`email ${email} joined the room and id ${id}`);
@@ -21,6 +22,7 @@ const Room = () => {
         console.log(`email ${email} disconnected, id: ${id}`);
         setRemoteSocketid(null);
         setRemoteStream(null);
+        setDisConnMsg(email)
     }, [])
 
     const handleCallUser = useCallback(async () => {
@@ -153,6 +155,9 @@ const Room = () => {
                     <ReactPlayer url={remoteStream} playing width="200px" height="200px" />
                 </div>
 
+            }
+            {
+                disConnMsg && <p>{`user ${disConnMsg} disconnected!`}</p>
             }
         </div>
     )
