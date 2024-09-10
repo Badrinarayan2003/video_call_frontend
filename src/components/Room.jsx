@@ -10,6 +10,7 @@ const Room = () => {
     const [myStream, setMyStream] = useState()
     const [remoteStream, setRemoteStream] = useState()
 
+    const [isMute, setIsMute] = useState(false);
 
     const handleUserJoined = useCallback(({ email, id }) => {
         console.log(`email ${email} joined the room and id ${id}`);
@@ -85,12 +86,20 @@ const Room = () => {
 
 
     useEffect(() => {
-        peer.peer.addEventListener('track', async (evt) => {
-            const remoteStream = evt.streams
-            console.log("GOT TRACKS!!!!");
-            console.log(remoteStream);
-            setRemoteStream(remoteStream[0]);
-        })
+
+        const handleTrack = (event) => {
+            const remoteStream = event.streams[0];
+            console.log("Received remote track:", remoteStream);
+            setRemoteStream(remoteStream);
+        };
+
+        const peerConnection = peer.peer; // Assuming `peer.peer` is the RTCPeerConnection
+        peerConnection.addEventListener('track', handleTrack);
+
+        return () => {
+            peerConnection.removeEventListener('track', handleTrack);
+        };
+
     }, [])
 
 
@@ -108,6 +117,7 @@ const Room = () => {
             socket.off("peer-nego-needed", handleNegoIncomming);
             socket.off("peer-nego-final", handleNegoFinal);
         }
+
     }, [socket, handleUserJoined, handleIncomingCall, handleCallAccepted, handleNegoIncomming, handleNegoFinal])
 
 
@@ -125,15 +135,15 @@ const Room = () => {
                 myStream &&
                 <div>
                     <h4 className="room-heading">my stream</h4>
-                    <ReactPlayer url={myStream} playing muted width="100px" height="100px" />
+                    <ReactPlayer url={myStream} playing muted={isMute} width="100px" height="100px" />
+                    <div> <button onClick={() => setIsMute(!isMute)}>{isMute ? "Unmute" : "Mute"}</button> </div>
                 </div>
-
             }
             {
                 remoteStream &&
                 <div>
-                    <h4 className="room-heading">Remote streambe</h4>
-                    <ReactPlayer url={remoteStream} playing playsinline muted width="200px" height="200px" />
+                    <h4 className="room-heading">Remote stream</h4>
+                    <ReactPlayer url={remoteStream} playing width="200px" height="200px" />
                 </div>
 
             }

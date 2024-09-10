@@ -1,22 +1,26 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-.App{
+
+.App {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.room-box{
+
+.room-box {
     display: flex;
     flex-direction: column;
 }
-.room-btn-box{
+
+.room-btn-box {
     display: flex;
     justify-content: space-between;
 }
-.room-btn-box button{
+
+.room-btn-box button {
     font-size: 1rem;
     padding: 2px 7px;
     border-radius: 5px;
