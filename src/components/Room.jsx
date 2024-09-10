@@ -17,6 +17,11 @@ const Room = () => {
         setRemoteSocketid(id)
     }, []);
 
+    const handleUserDisconnected = useCallback(({ email, id }) => {
+        console.log(`email ${email} disconnected, id: ${id}`);
+        setRemoteSocketid(null);
+        setRemoteStream(null);
+    }, [])
 
     const handleCallUser = useCallback(async () => {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -109,6 +114,7 @@ const Room = () => {
         socket.on("call-accepted", handleCallAccepted);
         socket.on("peer-nego-needed", handleNegoIncomming);
         socket.on("peer-nego-final", handleNegoFinal);
+        socket.on("user-disconnected", handleUserDisconnected);
 
         return () => {
             socket.off("user-Joined", handleUserJoined);
@@ -116,9 +122,10 @@ const Room = () => {
             socket.off("call-accepted", handleCallAccepted);
             socket.off("peer-nego-needed", handleNegoIncomming);
             socket.off("peer-nego-final", handleNegoFinal);
+            socket.off("user-disconnected", handleUserDisconnected);
         }
 
-    }, [socket, handleUserJoined, handleIncomingCall, handleCallAccepted, handleNegoIncomming, handleNegoFinal])
+    }, [socket, handleUserJoined, handleIncomingCall, handleCallAccepted, handleNegoIncomming, handleNegoFinal, handleUserDisconnected])
 
 
     return (
