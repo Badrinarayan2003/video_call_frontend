@@ -10,8 +10,9 @@ const Room = () => {
     const [myStream, setMyStream] = useState()
     const [remoteStream, setRemoteStream] = useState()
 
-    const [isMute, setIsMute] = useState(false);
     const [disConnMsg, setDisConnMsg] = useState();
+    const [isCameraOn, setIsCameraOn] = useState(true);
+    const [isMicOn, setIsMicOn] = useState(true);
 
     const handleUserJoined = useCallback(({ email, id }) => {
         console.log(`email ${email} joined the room and id ${id}`);
@@ -82,6 +83,34 @@ const Room = () => {
         await peer.setLocalDescription(ans);
     }, [])
 
+
+
+    // <-----HANDLE CAMERA PAUSE AND PLAY----->
+    const toggleCamera = useCallback(() => {
+        if (myStream) {
+            const videoTrack = myStream.getTracks().find((track) => track.kind === "video")
+            console.log(videoTrack, "videoTrack-----for pause resume!");
+
+            videoTrack.enabled = !videoTrack.enabled
+            setIsCameraOn(videoTrack.enabled);
+        }
+    }, [myStream])
+
+    // <-----HANDLE MIC MUTE AND UNMUTE----->
+    const toggleMic = useCallback(() => {
+        if (myStream) {
+            const audioTrack = myStream.getTracks().find((track) => track.kind === "audio")
+            console.log(audioTrack, "audioTrack-----for pause resume!");
+
+            audioTrack.enabled = !audioTrack.enabled
+            setIsMicOn(audioTrack.enabled);
+        }
+    }, [myStream])
+
+
+
+
+
     useEffect(() => {
         peer.peer.addEventListener('negotiationneeded', handleNegoNeeded);
 
@@ -145,7 +174,10 @@ const Room = () => {
                 <div>
                     <h4 className="room-heading">my stream</h4>
                     <ReactPlayer url={myStream} playing muted width="100px" height="100px" />
-                    <div> <button onClick={() => setIsMute(!isMute)}>{isMute ? "Unmute" : "Mute"}</button> </div>
+                    <div className="room-btn-box">
+                        <button onClick={toggleCamera}>{isCameraOn ? "Pause" : "Play"}</button>
+                        <button onClick={toggleMic}>{isMicOn ? "Mute" : "Unmute"}</button>
+                    </div>
                 </div>
             }
             {

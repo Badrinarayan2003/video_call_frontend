@@ -26,10 +26,10 @@ const Home = () => {
     useEffect(() => {
         socket.on("join-room", handleJoinRoom)
 
-
         return () => {
             socket.off("join-room", handleJoinRoom)
         }
+
     }, [socket, handleJoinRoom])
 
 
