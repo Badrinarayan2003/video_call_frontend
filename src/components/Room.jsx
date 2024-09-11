@@ -7,12 +7,13 @@ import ReactPlayer from 'react-player'
 const Room = () => {
     const socket = useSocket();
     const [remoteSocketId, setRemoteSocketid] = useState(null);
-    const [myStream, setMyStream] = useState()
-    const [remoteStream, setRemoteStream] = useState()
+    const [myStream, setMyStream] = useState();
+    const [remoteStream, setRemoteStream] = useState();
 
     const [disConnMsg, setDisConnMsg] = useState();
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [isMicOn, setIsMicOn] = useState(true);
+
 
     const handleUserJoined = useCallback(({ email, id }) => {
         console.log(`email ${email} joined the room and id ${id}`);
@@ -27,10 +28,15 @@ const Room = () => {
     }, [])
 
     const handleCallUser = useCallback(async () => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: true
-        })
+        const extDevices = await navigator.mediaDevices.enumerateDevices();
+        const cameraDevice = extDevices.filter((device) => device.kind === "videoinput");
+
+        const constraints = {
+            'audio': { 'echoCancellation': true },
+            'video': cameraDevice[0].deviceId ? { 'deviceId': cameraDevice[0].deviceId, } : true
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
         const offer = await peer.getOffer();
         socket.emit("user-call", { to: remoteSocketId, offer })
         setMyStream(stream)
@@ -41,15 +47,21 @@ const Room = () => {
 
     const handleIncomingCall = useCallback(async ({ from, offer }) => {
         setRemoteSocketid(from);
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: true
-        })
+        const extDevices = await navigator.mediaDevices.enumerateDevices();
+        const cameraDevice = extDevices.filter((device) => device.kind === "videoinput");
+
+        const constraints = {
+            'audio': { 'echoCancellation': true },
+            'video': cameraDevice[0].deviceId ? { 'deviceId': cameraDevice[0].deviceId, } : true
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
         setMyStream(stream)
         console.log(`incomming call from ${from} and offer`, offer);
         const ans = await peer.getAnswer(offer);
         socket.emit("call-accepted", { to: from, ans })
     }, [socket])
+
 
     const sendStream = useCallback(() => {
         for (const track of myStream.getTracks()) {
@@ -82,6 +94,19 @@ const Room = () => {
     const handleNegoFinal = useCallback(async ({ ans }) => {
         await peer.setLocalDescription(ans);
     }, [])
+
+
+
+    // FOR TESTING PURPOSE 
+
+    const getConnectedDevices = useCallback(async () => {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const d = devices.filter((device) => device.kind === "videoinput")
+        console.log(d, "d");
+        console.log(d[0].deviceId, d[0].kind, d[0].label, "ddd!--1");
+    }, [])
+
+
 
 
 
@@ -177,6 +202,7 @@ const Room = () => {
                     <div className="room-btn-box">
                         <button onClick={toggleCamera}>{isCameraOn ? "Pause" : "Play"}</button>
                         <button onClick={toggleMic}>{isMicOn ? "Mute" : "Unmute"}</button>
+                        <button onClick={getConnectedDevices}>MultiDevices</button>
                     </div>
                 </div>
             }
