@@ -14,7 +14,6 @@ const Room = () => {
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [isMicOn, setIsMicOn] = useState(true);
 
-
     const handleUserJoined = useCallback(({ email, id }) => {
         console.log(`email ${email} joined the room and id ${id}`);
         setRemoteSocketid(id)
@@ -62,7 +61,6 @@ const Room = () => {
         socket.emit("call-accepted", { to: from, ans })
     }, [socket])
 
-
     const sendStream = useCallback(() => {
         for (const track of myStream.getTracks()) {
             peer.peer.addTrack(track, myStream);
@@ -94,19 +92,6 @@ const Room = () => {
     const handleNegoFinal = useCallback(async ({ ans }) => {
         await peer.setLocalDescription(ans);
     }, [])
-
-
-
-    // FOR TESTING PURPOSE 
-
-    const getConnectedDevices = useCallback(async () => {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const d = devices.filter((device) => device.kind === "videoinput")
-        console.log(d, "d");
-        console.log(d[0].deviceId, d[0].kind, d[0].label, "ddd!--1");
-    }, [])
-
-
 
 
 
@@ -202,7 +187,6 @@ const Room = () => {
                     <div className="room-btn-box">
                         <button onClick={toggleCamera}>{isCameraOn ? "Pause" : "Play"}</button>
                         <button onClick={toggleMic}>{isMicOn ? "Mute" : "Unmute"}</button>
-                        <button onClick={getConnectedDevices}>MultiDevices</button>
                     </div>
                 </div>
             }
