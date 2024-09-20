@@ -3,12 +3,156 @@
     padding: 0;
 }
 
+
 .App {
+    position: relative;
+    width: 390px;
+    height: 100vh;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f7f8ff;
+}
+
+.App::-webkit-scrollbar {
+    width: 0;
+}
+
+/* LOGIN SIGN UP SECTION  */
+
+.Login-signup-section {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    background: rgb(38, 38, 38);
+    background: linear-gradient(180deg, rgba(38, 38, 38, 1) 20%, rgba(0, 0, 0, 1) 100%);
+    color: #dfdfdf;
+}
+
+.login-signup-form {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.form-logo {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
+
+.form-logo img {
+    width: 75px;
+}
+
+.form-heading p {
+    font-size: 0.9rem;
+    color: #878787;
+}
+.login-signup-input-box div label{
+    font-size: 0.9rem;
+}
+.login-signup-input-box div input {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid gray;
+    font-size: 0.9rem;
+}
+
+.login-signup-input-box div input::placeholder {
+    color: #878787;
+}
+
+.forget-pass-box a {
+    text-decoration: none;
+    color: #E22C1E;
+    font-size: 0.9rem;
+}
+
+.forget-pass-box a:hover {
+    text-decoration: underline;
+}
+
+.login-signup-btn button {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: #E22C1E;
+    color: #fff;
+    width: 100%;
+}
+
+.or-sign-in-with {
+    color: #878787;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.google-icon {
+    height: 38px;
+    width: 38px;
+    border: 1px solid #D6D6D6;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.google-icon img {
+    width: 55%;
+    height: 55%;
+}
+
+.register-link {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    text-decoration: none;
+    color: #E22C1E;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.eye-btn {
+    position: absolute;
+    top: 2.1rem;
+    left: 19rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.login-signup-input-box div input[type=password]::-ms-reveal {
+    display: none;
+}
+
+.terms-policy {
+    text-align: center;
+    line-height: 1;
+}
+
+.terms-policy span {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.signup-error-msg {
+    font-size: 0.8rem;
+    color: rgb(222, 70, 70);
+    background-color: #dfdfdf;
+    padding: 4px 22px;
+    border-radius: 7px;
+}
+
+.terms-policy span a{
+    color: #E22C1E;
+}
+
+/* ROOM  */
 
 .room-box {
     display: flex;
