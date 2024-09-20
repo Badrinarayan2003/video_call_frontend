@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LoginWithGoogle from "./LoginWithGoogle"
 
-import { FaEye,FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Signup = () => {
@@ -16,7 +16,7 @@ const Signup = () => {
             {/* {errorMsg ? (<p className="signup-error-msg mb-2 fw-bold">Email Already Registered!</p>) : ""} */}
             <form className="login-signup-form">
                 <div className="form-logo mb-3">
-                    <img src="./images/logo_1.png"/>
+                    <img src="./images/logo_1.png" alt="logo" />
                 </div>
                 <div className="form-heading">
                     <h5 className="fw-bold mb-3">Create your new account</h5>
@@ -30,15 +30,15 @@ const Signup = () => {
                         <label htmlFor="email" className="form-label fw-bold mb-1">Your Email</label>
                         <input type="email" className="form-control" id="email" placeholder="Enter Email" name="email" required />
                     </div>
-                    <div className="mb-2" style={{position:"relative"}}>
+                    <div className="mb-2" style={{ position: "relative" }}>
                         <label htmlFor="password" className="form-label fw-bold mb-1">New Password</label>
                         <input type={isVisible ? "text" : "password"} className="form-control" id="password" placeholder="Password" name="password" required />
-                        <span className="eye-btn"> {isVisible ? <FaEye />  : <FaEyeSlash />}</span>
+                        <span className="eye-btn" onClick={() => setIsVisible(!isVisible)}> {isVisible ? <FaEye /> : <FaEyeSlash />}</span>
                     </div>
-                    <div className="mb-4" style={{position:"relative"}}>
+                    <div className="mb-4" style={{ position: "relative" }}>
                         <label htmlFor="password" className="form-label fw-bold mb-1">Confirm Password</label>
                         <input type={isVisible ? "text" : "password"} className="form-control" id="password" placeholder="Password" name="password" required />
-                        <span className="eye-btn"> {isVisible ?  <FaEye /> : <FaEyeSlash />}</span>
+                        <span className="eye-btn" onClick={() => setIsVisible(!isVisible)}> {isVisible ? <FaEye /> : <FaEyeSlash />}</span>
                     </div>
                 </div>
 
@@ -53,7 +53,7 @@ const Signup = () => {
                 </div>
                 <p className="register-link text-center mb-2">Have an account? <Link to="/login">Sign in</Link></p>
                 <div className="terms-policy mb-2">
-                    <span>By using this app, you agree to <a href="#">Terms of Use</a> and <a href="#">Privacy Policy </a>Powerded by B-Shorts</span>
+                    <span>By using this app, you agree to <a href="/">Terms of Use</a> and <a href="/">Privacy Policy </a>Powerded by B-Shorts</span>
                 </div>
             </form>
         </div>
