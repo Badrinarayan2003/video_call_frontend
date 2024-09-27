@@ -24,7 +24,7 @@
     width: 100%;
     height: 100%;
     flex-direction: column;
-    padding: 1rem 1.5rem 1rem 1.5rem;
+    padding: 2.5rem 1.5rem 1rem 1.5rem;
     background: rgb(38, 38, 38);
     background: linear-gradient(180deg, rgba(38, 38, 38, 1) 20%, rgba(0, 0, 0, 1) 100%);
     color: #dfdfdf;
@@ -49,14 +49,18 @@
     font-size: 0.9rem;
     color: #878787;
 }
-.login-signup-input-box div label{
+
+.login-signup-input-box div label {
     font-size: 0.9rem;
 }
+
 .login-signup-input-box div input {
     padding: 0.5rem 1rem;
-    background: transparent;
-    border: 1px solid gray;
+    background-color: transparent !important;
+    border: 1px solid gray !important;
     font-size: 0.9rem;
+    color: #bbbbbb !important;
+    font-weight: 500;
 }
 
 .login-signup-input-box div input::placeholder {
@@ -148,8 +152,18 @@
     border-radius: 7px;
 }
 
-.terms-policy span a{
+.terms-policy span a {
     color: #E22C1E;
+}
+
+
+.password-error-msg {
+    position: absolute;
+    right: 1px;
+    top: -9px;
+    z-index: 100;
+    font-size: 0.8rem;
+    color: red;
 }
 
 /* ROOM  */
